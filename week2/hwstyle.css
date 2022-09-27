@@ -66,13 +66,23 @@ header .header-cases{
 }
 
 @media(min-width:600px){
+    body {
+        background-color: #b17979
+    }
+    
+    header{
+        background-color: rgb(240, 209, 209);
+        width: 100%;
+        height: 130px;
+    }
+
     header .header-brand {
-        color: rgb(255, 255, 255);
+        color: rgb(112, 56, 56);
         margin: 30px 0 ;
-        text-align:left;
-        line-height:38px;
+        text-align:center;
+        line-height:50px;
         padding: 0 20px 0 40px;
-        border-bottom: 2px solid rgb(255, 254, 254);
+        border-bottom: 3px solid #b17979;
         float: left;
     }
 
@@ -103,37 +113,46 @@ header .header-cases{
 }
 
 @media only screen and (min-width:1000px){
+    body {
+        background-color: #ffffff
+    }
+    
+    header{
+        background-color: rgb(237, 192, 192);
+        width: 100%;
+        height: 130px;
+    }
+    
     header .header-brand {
-        color: rgb(46, 46, 46);
+        color: rgb(125, 63, 63);
         margin: 30px 0 ;
         text-align:left;
-        line-height:38px;
+        line-height:50px;
         padding: 0 20px 0 40px;
-        border-right: 3px solid #111;
+        border-right: 3px solid  rgb(125, 63, 63);
         border-bottom: none;
-        float:inline-start;
+        float:inliner-start;
     }
 
     header nav ul{
         margin: 20px 0px 0px 20px;
-        float: left;
+        float: none;
     }
     
     header nav ul li a {
         line-height: 100px; 
         float:inline-start;
-        color: rgb(212, 165, 165);
+        color: rgb(143, 94, 94);
     }
 
     header .header-cases{
-        display:flex;
+        display:inline-flexbox;
         font-family:'EB Garamond', serif;
         font-size: 20px;
-        color: rgb(222, 169, 169);
+        color: rgb(143, 94, 94);
         text-transform: uppercase;
-        line-height: 40px; 
-        border:1px solid rgb(222, 169, 169);
-        float:right;
+        line-height: px; 
+        border:1px solid rgb(143, 94, 94);
         margin-right:40px;
         margin-top: 0px;
         padding:0 40px;
@@ -212,7 +231,7 @@ header .header-cases{
         font-size: 30px;
         font-weight:500 ;
         line-height: 40px;
-        color:rgb(246, 190, 190);
+        color:rgb(255, 255, 255);
         text-align:center;
         /*text-shadow: 0.5px 2px 8px #111;*/
     }
@@ -246,7 +265,6 @@ header .header-cases{
         width: calc(25% - 2px)!important;
      }
 
-
      .index-links div h3{
         line-height: 100px;
     }
@@ -266,14 +284,14 @@ header .header-cases{
         font-size: 30px;
         font-weight:500 ;
         line-height: 40px;
-        color:rgb(255, 255, 255);
+        color: rgb(125, 63, 63);
         text-align:center;
         /*text-shadow: 0.5px 2px 8px #111;*/
     }
    
     .index-banner h1{
         display:block;
-        color:rgb(227, 227, 227);
+        color: rgb(155, 84, 84);
         text-align:center;
         width:560px;
         margin:0 auto;
@@ -289,7 +307,7 @@ header .header-cases{
     .index-links div{
         margin: 20px 10px 0;
         height: 150px;
-        background-color: #d4d4d4;
+        background-color: #ead6d6;
         float: left;
     }
 

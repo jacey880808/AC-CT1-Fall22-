@@ -10,12 +10,20 @@
         main {
             height: 100vh;
         }
+
+        header img {
+            width: 100px;
+        }
+
     </style>
 </head>
 
 <body>
     <header>
         <button id="colorBtn">Click Me!</button>
+        <button id="textBtn">Click for text</button>
+
+        <img src="1200px-SNice.svg.png" alt="smily face" id="imageBtn">
     </header>
 
     <main id="mainElem"></main>
@@ -24,6 +32,27 @@
         let clrButton = document.getElementById("colorBtn")
         console.log(clrButton)
         const mnElement = document.getElementById("mainElem")
+        const txtButton = document.getElementById("textBtn")
+        const imgButton = document.getElementById("imageBtn")
+
+        const addSomeText = ()=>{
+            let htmlElem = document.createElement("h3")
+            let someText = "This is a string of text!"
+            htmlElem.innerText = someText
+
+            mnElement.appendChild(htmlElem)
+        }
+
+        const addAnImage = ()=>{
+            let imgElem = document.createElement("img")
+            imgElem.src = "https://en.wikipedia.org/wiki/Smiley#/media/File:SNice.svg"
+            imgElem.alt = "smily face"
+
+            mnElement.appendChild(imgElem)
+        }
+
+        txtButton.addEventListener("click", addSomeText)
+        imgButton.addEventListener("click", addAnImage)
 
         clrButton.addEventListener("click", ()=>{
             let red = Math.random()*255

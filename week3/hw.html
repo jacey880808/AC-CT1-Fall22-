@@ -4,28 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buttons doing things</title>
+    <title>Kinkin</title>
 
     <style>
-        main {
-            height: 100vh;
+       *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        header img {
-            width: 30px;
+        body{
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: img("01kin.JPG");
         }
-
+        .back-frem{
+            width: 18rem;
+            height: 6rem;
+            background: white;
+            border-radius: 30px;
+            position: fixed;
+            bottom: 10px;
+            display: flex;
+            justify-content:space-around;
+            align-items:center;
+        }
+        .back-frem .back-chang{
+            width: 120px;
+            height: 80px;
+            background: wheat;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 30px;
+        }
+        .back-frem .back-change img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <img src="1200px-SNice.svg.png" alt="smily face" id="imageBtn">
-    </header>
-
-    <main id="mainElem"></main>
-
-    <script src="hwscript.js"></script>
+    <div class="back-frem">
+        <div class="back-chang" onclick="background1()"><img src="01kin.JPG" alt=""></div>
+        <div class="back-chang" onclick="background2()"><img src="02kin.JPG" alt=""></div>
+        <div class="back-chang" onclick="background3()"><img src="03kin.JPG" alt=""></div>
+        <div class="back-chang" onclick="background4()"><img src="04kin.JPG" alt=""></div>
+    </div>
 </body>
 
+<script>
+    function background1(){
+        document.querySelector('body').style.background = "url('01kin.JPG') center center / cover";
+    }
+    function background2(){
+        document.querySelector('body').style.background = "url('02kin.JPG') center center / cover";
+    }
+    function background3(){
+        document.querySelector('body').style.background = "url('03kin.JPG') center center / cover";
+    }
+    function background4(){
+        document.querySelector('body').style.background = "url('04kin.JPG') center center / cover";
+    }
+</script>
 </html>

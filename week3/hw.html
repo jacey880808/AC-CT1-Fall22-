@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <!-- CSS -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+     <link rel="stylesheet" href="hw.css">
+
     <title>Kinkin</title>
 
     <style>
@@ -27,7 +35,7 @@
             background: white;
             border-radius: 30px;
             position: fixed;
-            bottom: 10px;
+            bottom: 15px;
             display: flex;
             justify-content:space-around;
             align-items:center;
@@ -49,6 +57,17 @@
 </head>
 
 <body>
+    <header>
+        <a href="04kin.JPG" class="header-brand"> Kinkin </a>
+            <nav>
+                <ul>
+                    <li> <a href="01kin.JPG">CAT</a> </li>
+                    <li> <a href="02kin.JPG">Happy</a> </li>
+                    <li> <a href="03kin.JPG">life</a> </li>
+                </ul>
+            </nav>
+       </header>
+
     <div class="back-frem">
         <div class="back-chang" onclick="background1()"><img src="01kin.JPG" alt=""></div>
         <div class="back-chang" onclick="background2()"><img src="02kin.JPG" alt=""></div>
@@ -56,19 +75,18 @@
         <div class="back-chang" onclick="background4()"><img src="04kin.JPG" alt=""></div>
     </div>
 </body>
-
 <script>
     function background1(){
-        document.querySelector('body').style.background = "url('01kin.JPG') center center / cover";
-    }
+    document.querySelector('body').style.background = "url('01kin.JPG') center center / cover";
+}
     function background2(){
-        document.querySelector('body').style.background = "url('02kin.JPG') center center / cover";
-    }
+    document.querySelector('body').style.background = "url('02kin.JPG') center center / cover";
+}
     function background3(){
-        document.querySelector('body').style.background = "url('03kin.JPG') center center / cover";
-    }
+    document.querySelector('body').style.background = "url('03kin.JPG') center center / cover";
+}
     function background4(){
-        document.querySelector('body').style.background = "url('04kin.JPG') center center / cover";
-    }
+    document.querySelector('body').style.background = "url('04kin.JPG') center center / cover";
+}
 </script>
 </html>

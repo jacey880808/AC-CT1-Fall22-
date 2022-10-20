@@ -58,7 +58,7 @@ function draw() {
   translate(width, random());
   rotate(PI*3)
   noStroke()
-  circle(posX, 2*posY, radius/2)
+  circle(sin(frameCount*0.1)*50 + height/2, 2*posY, radius/2)
   pop()
    
   
@@ -67,7 +67,7 @@ function draw() {
   translate(width / 2, height / 2);
   for(let i=0;i<1;i++){rotate(sin(millis()*0.001*(i*0.3 +1)));
   noStroke()
-  rect(random(),random(), 52, 52);
+  rect(random(),sin(frameCount*0.1)*20 + height/2, 52, 52);
   pop()
 }
   
@@ -76,7 +76,7 @@ function draw() {
   translate(width, height);
   for(let i=0;i<1;i++){rotate(sin(millis()*0.001*(i*5 +1)));
   noStroke()
-  rect(-86,-86, 32, 82);
+  rect(-86,-86, sin(frameCount*0.1)*50 + height/2, 82);
   pop()
 }
   

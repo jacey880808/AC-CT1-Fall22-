@@ -7,7 +7,7 @@ var velocityY = new Array(particlesQuantity).fill(0);
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	stroke(64, 255, 255);
+	stroke(255, 255, 255);
 	
 	for (var particle = 1; particle < particlesQuantity; particle++) {
 		positionX[particle] = random(0, width);
@@ -28,7 +28,7 @@ function draw() {
 	positionY[0] += velocityY[0];
 	
 	for (var particle = 1; particle < particlesQuantity; particle++) {
-		var whatever = 1024 / (sq(positionX[0] - positionX[particle]) + sq(positionY[0] - positionY[particle]));
+		var whatever = 1500 / (sq(positionX[0] - positionX[particle]) + sq(positionY[0] - positionY[particle]));
 		
 		velocityX[particle] = velocityX[particle] * 0.95 + (velocityX[0] - velocityX[particle]) * whatever;
 		velocityY[particle] = velocityY[particle] * 0.95 + (velocityY[0] - velocityY[particle]) * whatever;

@@ -29,6 +29,14 @@
     <h4>trochoid Function</h4>
     <h6>This function calculates the distance from a given point (`uv`) to a trochoid curve at that point. It considers a trochoid with parameters `A`, `L`, and `C`. The trochoid is defined parametrically, and the function finds the closest distance from the point `uv` to the trochoid.
     </h6>
+
+    <h4>mainImage function</h4>
+    <h6>1. **UV Mapping:** It maps the fragment coordinates (`fragCoord`) to UV coordinates, considering the resolution.
+        <br>2. **Mouse Interaction:** If the mouse is clicked (`iMouse.z > 0`), it adjusts the wavelength (`L`) and amplitude (`A`) based on the mouse position.
+        <br>3. **Distance Calculations:** It calculates the distance (`d`) from the fragment to three trochoids with different parameters.
+        <br>4. **Smoothing:** It uses the `smoothstep` function to smooth the transition between regions where `d` is smaller than a threshold.
+        <br>5. **Coloring:** The result is assigned to `fragColor`, creating a grayscale image based on the smoothstep function.
+        </h6>
     <img src="Digital.jpg" width="1200px"> 
     
 

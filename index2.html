@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color:rgb(253, 189, 121)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <button id="startButton">START!</button>
+    </header>
+    <main id="main"> </main>
+
+    <script>
+        let startBTN = document.getElementById("startButton")
+        let mainELEM = document.getElementById("main")
+        let cocktailURL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
+
+        let fetchCocktailData = () =>{
+            console.info("ClICKED!")
+            fetch(cocktailURL)
+                .then((response) => response.json())
+                .then((payload) => appendCocktailData(payload))
+        }
+
+        let appendCocktailData = (data)=>{
+            let drName = data.drinks[0].strDrink
+            let drImg = data.drinks[0].strDrinkThumb
+
+            let nameHolder = document.createElement('h3')
+            nameHolder.innerText = drName
+            mainELEM.appendChild(nameHolder)
+
+            let imageHolder = document.createElement('img')
+            imageHolder.src = drImg
+            mainELEM.appendChild(imageHolder)
+
+            fetch()
+
+        }
+        startBTN.addEventListener("click", fetchCocktailData)
+    </script>
+</body>
+
+</html>

@@ -7,50 +7,47 @@
     <title>Week 1: The WWW as a Rube Goldberg machine</title>
 </head>
 <body>
-    <button role="button" id="initTrigger">START!</button>
-    <section id="cocktailSection"></section>
-    <section id="NASAimage"></section>
+    <button role="button" id="initTrigger">The Rose Gallery</button>
+    <section id="floralSection"></section>
 
 
     <script>
         const triggerButton = document.getElementById('initTrigger')
-        const cocktailSection = document.getElementById('cocktailSection')
+        const floralSection = document.getElementById('floralSection')
         
 
-        const randomCocktailURL = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+        const randomfloralURL = "https://www.therosegallery.co.uk/collections/floral-art"
 
-        const fetchCocktailData = () => {
-            fetch(randomCocktailURL)
+        const fetchfloralData = () => {
+            fetch(randomfloralURL)
                 .then((response) =>  response.json() )
-                .then((payload) => appendCocktailData(payload))
+                .then((payload) => appendfloralData(payload))
 
         }
 
-        const appendCocktailData = (data) => {
+        const appendfloralData = (data) => {
             console.log(data)
 
-            const firstDrink = data.drinks[0]
-            const drinkName = firstDrink.strDrink
-            const drinkImg = firstDrink.strDrinkThumb
+            const floral = data.florals[0]
+            const floralName = floral.strfloral
+            const floralImg = floral.strfloralThumb
 
             const nameHeader = document.createElement('h3')
-            nameHeader.innerText = "We had " + drinkName
-            cocktailSection.appendChild(nameHeader)
+            nameHeader.innerText = "We had " + floralName
+            floralSection.appendChild(nameHeader)
 
             const image = document.createElement('img')
-            image.src = drinkImg
-            image.alt = "image of " + drinkName
-            cocktailSection.appendChild(image)
+            image.src = floralImg
+            image.alt = "image of " + floralName
+            floralSection.appendChild(image)
 
-            const a = new Date(firstDrink.dateModified)
-            const dateForNASAAPI = a.getUTCFullYear().toString()+"-"+(a.getUTCMonth()+1).toString()+"-"+a.getUTCDay()
+            const a = new Date(floral.dateModified)
 
          
         }
 
+        triggerButton.addEventListener("click", fetchfloralData)
         
-
-        triggerButton.addEventListener("click", fetchCocktailData)
     </script>
 </body>
 </html>

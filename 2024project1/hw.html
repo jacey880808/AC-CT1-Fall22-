@@ -16,21 +16,21 @@
         const floralSection = document.getElementById('floralSection')
         
 
-        const randomfloralURL = "https://www.therosegallery.co.uk/collections/floral-art"
+        const randomFloralURL = "https://www.epicgardening.com/types-of-flowers/"
 
-        const fetchfloralData = () => {
-            fetch(randomfloralURL)
+        const fetchFloralData = () => {
+            fetch(randomFloralURL)
                 .then((response) =>  response.json() )
-                .then((payload) => appendfloralData(payload))
+                .then((payload) => appendFloralData(payload))
 
         }
 
-        const appendfloralData = (data) => {
+        const appendFloralData = (data) => {
             console.log(data)
 
-            const floral = data.florals[0]
-            const floralName = floral.strfloral
-            const floralImg = floral.strfloralThumb
+            const firstFloral = data.florals[0]
+            const floralName = floral.strFloral
+            const floralImg = floral.strFloralThumb
 
             const nameHeader = document.createElement('h3')
             nameHeader.innerText = "We had " + floralName
@@ -41,13 +41,14 @@
             image.alt = "image of " + floralName
             floralSection.appendChild(image)
 
-            const a = new Date(floral.dateModified)
+            const a = new Date(firstFloral.dateModified)
 
          
         }
 
-        triggerButton.addEventListener("click", fetchfloralData)
+        triggerButton.addEventListener("click", fetchFloralData)
         
     </script>
+    
 </body>
 </html>

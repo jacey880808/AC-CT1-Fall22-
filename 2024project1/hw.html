@@ -1,54 +1,81 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color:rgb(253, 189, 121)" > 
+<html lang="en" style="background-color:rgb(253, 189, 121)">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1: The WWW as a Rube Goldberg machine</title>
+    <title>The WWW as a Rube Goldberg machine</title>
 </head>
 <body>
-    <button role="button" id="initTrigger">The Rose Gallery</button>
-    <section id="floralSection"></section>
+    <button role="button" id="initTrigger">START!</button>
+    <section id="cocktailSection"></section>
+    <section id="NASAimage"></section>
 
 
     <script>
         const triggerButton = document.getElementById('initTrigger')
-        const floralSection = document.getElementById('floralSection')
-        
+        const cocktailSection = document.getElementById('cocktailSection')
+        const NASAsection = document.getElementById('NASAimage')
 
-        const randomFloralURL = "https://www.epicgardening.com/types-of-flowers/"
+        const randomCocktailURL = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
 
-        const fetchFloralData = () => {
-            fetch(randomFloralURL)
+        const nasaAPODurl = "https://api.nasa.gov/planetary/apod"
+        const nasaAPIkey = "api_key=DEMO_KEY"
+        const nasaDate = "date=2003-10-29"
+
+        const fetchCocktailData = () => {
+            fetch(randomCocktailURL)
                 .then((response) =>  response.json() )
-                .then((payload) => appendFloralData(payload))
+                .then((payload) => appendCocktailData(payload))
 
         }
 
-        const appendFloralData = (data) => {
+        const appendCocktailData = (data) => {
             console.log(data)
 
-            const firstFloral = data.florals[0]
-            const floralName = floral.strFloral
-            const floralImg = floral.strFloralThumb
+            const firstDrink = data.drinks[0]
+            const drinkName = firstDrink.strDrink
+            const drinkImg = firstDrink.strDrinkThumb
 
             const nameHeader = document.createElement('h3')
-            nameHeader.innerText = "We had " + floralName
-            floralSection.appendChild(nameHeader)
+            nameHeader.innerText = "We had " + drinkName
+            cocktailSection.appendChild(nameHeader)
 
             const image = document.createElement('img')
-            image.src = floralImg
-            image.alt = "image of " + floralName
-            floralSection.appendChild(image)
+            image.src = drinkImg
+            image.alt = "image of " + drinkName
+            cocktailSection.appendChild(image)
 
-            const a = new Date(firstFloral.dateModified)
+            const a = new Date(firstDrink.dateModified)
+            const dateForNASAAPI = a.getUTCFullYear().toString()+"-"+(a.getUTCMonth()+1).toString()+"-"+a.getUTCDay()
 
-         
+            fetchNASAData(dateForNASAAPI)
         }
 
-        triggerButton.addEventListener("click", fetchFloralData)
-        
+        const fetchNASAData = (picDate) => {
+            const fetchURL = nasaAPODurl+"?"+nasaAPIkey+"&"+"date="+picDate
+            fetch(fetchURL)
+                .then((payload) =>  payload.json() )
+                .then((json) => appendNASAData(json))
+        }
+
+        const appendNASAData = (data) => {
+            console.log(data)
+
+            const picTitle = data.title
+            const imgURL = data.url
+
+            const picHeader = document.createElement('h3')
+            picHeader.innerText = picTitle
+            NASAsection.appendChild(picHeader)
+
+            const nasaImg = document.createElement('img')
+            nasaImg.src = imgURL
+            nasaImg.alt = "the image of " + picTitle
+            NASAsection.appendChild(nasaImg)
+        }
+
+        triggerButton.addEventListener("click", fetchCocktailData)
     </script>
-    
 </body>
 </html>

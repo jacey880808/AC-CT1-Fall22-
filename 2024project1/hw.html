@@ -6,24 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The WWW as a Rube Goldberg machine</title>
     <style>
-        #initTrigger, #searchButton {
+        #initTrigger, #searchButton, #randomMealButton {
             font-size: 30px; /* Set the font size to make the buttons bigger */
             font-weight: bold;
             padding: 10px 20px; /* Set padding for a larger clickable area */
-            background-color: #4195cd; /* Set a background color */
-            color: #fff; /* Set text color to white */
             border: none; /* Remove default button border */
             border-radius: 10px; /* Add some border radius for a rounded look */
             cursor: pointer; /* Add a pointer cursor for better user experience */
             margin-right: 10px; /* Add some margin between buttons */
         }
 
-        #searchInput {
-            font-size: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
+        #searchButton {
+            font-size: 30px;
+            padding: 10px 20px; /* Set padding for a larger clickable area for the "Search" button */
+            background-color: #fff; /* Change background color to white for the "Search" button */
+            color: #3498db; /* Set text color to blue for the "Search" button */
+        }
+
+        #initTrigger, #randomMealButton {
+            background-color: #4195cd; /* Set a background color for the "Eat What Today?" and "Random Meal's Ingredients" buttons */
+            color: #fff; /* Set text color to white */
         }
 
         h3 {
@@ -47,27 +49,30 @@
 </head>
 <body>
     <input type="text" id="searchInput" placeholder="Search by name">
-    <button role="button" id="initTrigger">Eat What Today?</button>
     <button role="button" id="searchButton">Search</button>
+    
+    <button role="button" id="initTrigger">Eat What Today?</button>
+    <button role="button" id="randomMealButton">Make Something?</button>
     <section id="mealSection"></section>
 
     <script>
         const triggerButton = document.getElementById('initTrigger');
         const searchButton = document.getElementById('searchButton');
+        const randomMealButton = document.getElementById('randomMealButton');
         const searchInput = document.getElementById('searchInput');
         const mealSection = document.getElementById('mealSection');
 
         const randomMealURL = "https://www.themealdb.com/api/json/v1/1/random.php";
         const searchMealURL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
-        const fetchMealData = (url) => {
+        const fetchMealData = (url, displayIngredients) => {
             fetch(url)
                 .then((response) => response.json())
-                .then((payload) => appendMealData(payload))
+                .then((payload) => appendMealData(payload, displayIngredients))
                 .catch((error) => console.error("Error fetching meal data:", error));
         }
 
-        const appendMealData = (data) => {
+        const appendMealData = (data, displayIngredients) => {
             console.log(data);
 
             const firstMeal = data.meals ? data.meals[0] : data.meal; // Handle different API response structures
@@ -77,25 +82,22 @@
             }
 
             const mealName = firstMeal.strMeal;
-            const mealImg = firstMeal.strMealThumb;
-            const ingredients = getIngredients(firstMeal);
 
             const nameHeader = document.createElement('h3');
             nameHeader.innerText = "Have some " + mealName;
+            mealSection.innerHTML = ''; // Clear previous content
             mealSection.appendChild(nameHeader);
 
             const image = document.createElement('img');
-            image.src = mealImg;
+            image.src = firstMeal.strMealThumb;
             image.alt = "image of " + mealName;
             mealSection.appendChild(image);
 
-            if (ingredients) {
+            if (displayIngredients) {
                 const ingredientsList = document.createElement('ul');
-                ingredientsList.innerHTML = ingredients;
+                ingredientsList.innerHTML = getIngredients(firstMeal);
                 mealSection.appendChild(ingredientsList);
             }
-
-            const a = new Date(firstMeal.dateModified);
         }
 
         const getIngredients = (meal) => {
@@ -110,12 +112,13 @@
             return ingredients;
         }
 
-        triggerButton.addEventListener("click", () => fetchMealData(randomMealURL));
+        triggerButton.addEventListener("click", () => fetchMealData(randomMealURL, false));
+        randomMealButton.addEventListener("click", () => fetchMealData(randomMealURL, true));
         
         searchButton.addEventListener("click", () => {
             const searchTerm = searchInput.value.trim();
             if (searchTerm !== "") {
-                fetchMealData(searchMealURL + searchTerm);
+                fetchMealData(searchMealURL + searchTerm, true);
             } else {
                 console.error("Please enter a search term.");
             }
@@ -123,5 +126,4 @@
     </script>
 </body>
 </html>
-
 

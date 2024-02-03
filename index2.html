@@ -1,81 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- This is an html code document -->
+<html lang="en"> <!--The language of this document type is English -->
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example 1 for The WWW as a Rube Goldberg machine</title>
+    <meta charset="UTF-8"><!--This code tag is to set the character encoding. This tag tells the browser to use UTF-8 encoding to interpret the text of the web page. This is important to ensure that the various characters in a web page, including characters from different languages, are displayed correctly.-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--In HTML, the <meta> tag is used to provide metadata about a web page, and this meta tag is used to ensure that the latest version of the rendering engine is used in Internet Explorer to improve compatibility and performance.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--This meta tag is used to ensure that a web page is displayed at the right width on a mobile device, thus enabling a responsive layout. This is important for the user experience on mobile devices as it ensures that the page renders correctly on small screens and that the user does not need to manually zoom or scroll.-->
+    <title>Vivi's javascript assignment of creative technology</title> <!--This is a title of website-->
+    <style>/*From here it's all about the css code*/
+        body {
+            background-color: black; /*The background of this page is black*/
+            display: flex; /*Flex layout is a CSS3 flexible box model for designing complex layout structures.*/
+            flex-direction: column;/*This is a vertical and flexible box model */
+            align-items: center; /*Aligns each child element in the box vertically.*/
+            justify-content: center;/*Aligns child elements in the box in the major axis direction.*/
+            height: 100vh; /*Element height fills the entire window of the page*/
+            margin: 300px 0 0 0; /*Flex The distance from the top of the page edge is 300px, the distance in all other directions is 0.*/
+        }
+
+        .title-bar { /*Now start setting up the CSS for the title bar*/
+            padding: 10px; /*Set the inner margin of the title bar to 10 pixels*/
+            position: fixed; /* Fix the title bar in the viewport */
+            top: 0; /* Distance from upper edge of viewport is 0 */
+            left: 0;/* Distance from left edge of viewport is 0 */
+            width: 100%;/* Set the width of the title bar to 100% */
+            
+        }
+
+        .title-bar h2 {
+            color: white; /* Set title text color to white */
+            padding: 5px 10px; /* Set the inner margin of the title text to (5 pixels top and bottom, 10 pixels left and right) */
+        }
+
+        nav {
+           display: flex;
+           justify-content: flex-end;
+           padding: 10px;
+           position: fixed;
+           width: 100%;
+           top: 20px; /* 调整以适应标题栏 */
+           right: 0px; /* 将导航栏固定在右上角 */
+}
+
+
+        button {
+            background-color: yellow;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px; /* Added to make the buttons rounded */
+            padding: 8px 15px; /* Adjusted padding for better appearance */
+            cursor: pointer;
+        }
+
+        section {
+            margin-top: 100px; /* Adjusted to accommodate the title bar */
+        }
+    </style>
 </head>
 <body>
-    <button role="button" id="initTrigger">START!</button>
-    <section id="cocktailSection"></section>
-    <section id="NASAimage"></section>
+    <div class="title-bar">
+        <h2>Help Kitty Choose A Meal</h2>
+    </div>
 
+    <nav>
+        <button role="button" id="initTrigger">Click!</button>
+        <button role="button" id="listByLetterTrigger">List Cocktails</button>
+        <button role="button" id="seafoodTrigger">Seafood</button>
+    </nav>
+    <section id="cocktailSection"></section>
+    <section id="catImageSection"></section>
 
     <script>
-        const triggerButton = document.getElementById('initTrigger')
-        const cocktailSection = document.getElementById('cocktailSection')
-        const NASAsection = document.getElementById('NASAimage')
+        const triggerButton = document.getElementById('initTrigger');
+        const listByLetterButton = document.getElementById('listByLetterTrigger');
+        const seafoodButton = document.getElementById('seafoodTrigger');
+        const cocktailSection = document.getElementById('cocktailSection');
+        const catImageSection = document.getElementById('catImageSection');
 
-        const randomCocktailURL = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
-
-        const nasaAPODurl = "https://api.nasa.gov/planetary/apod"
-        const nasaAPIkey = "api_key=DEMO_KEY"
-        const nasaDate = "date=2003-10-29"
+        const randomCocktailURL = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+        const catAPIURL = "https://api.thecatapi.com/v1/images/search";
+        const cocktailsByLetterURL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a";
+        const seafoodURL = "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian";
+        const randomMealURL = "https://www.themealdb.com/api/json/v1/1/random.php"; // Added randomMealURL
 
         const fetchCocktailData = () => {
             fetch(randomCocktailURL)
-                .then((response) =>  response.json() )
-                .then((payload) => appendCocktailData(payload))
-
+                .then(response => response.json())
+                .then(payload => appendCocktailData(payload));
         }
 
         const appendCocktailData = (data) => {
-            console.log(data)
+            console.log(data);
 
-            const firstDrink = data.drinks[0]
-            const drinkName = firstDrink.strDrink
-            const drinkImg = firstDrink.strDrinkThumb
+            const firstDrink = data.drinks[0];
+            const drinkName = firstDrink.strDrink;
+            const drinkImg = firstDrink.strDrinkThumb;
 
-            const nameHeader = document.createElement('h3')
-            nameHeader.innerText = "We had " + drinkName
-            cocktailSection.appendChild(nameHeader)
+            const nameHeader = document.createElement('h3');
+            nameHeader.innerText = "We had " + drinkName;
+            cocktailSection.appendChild(nameHeader);
 
-            const image = document.createElement('img')
-            image.src = drinkImg
-            image.alt = "image of " + drinkName
-            cocktailSection.appendChild(image)
+            const image = document.createElement('img');
+            image.src = drinkImg;
+            image.alt = "image of " + drinkName;
+            cocktailSection.appendChild(image);
 
-            const a = new Date(firstDrink.dateModified)
-            const dateForNASAAPI = a.getUTCFullYear().toString()+"-"+(a.getUTCMonth()+1).toString()+"-"+a.getUTCDay()
-
-            fetchNASAData(dateForNASAAPI)
+            fetchCatImageData();
         }
 
-        const fetchNASAData = (picDate) => {
-            const fetchURL = nasaAPODurl+"?"+nasaAPIkey+"&"+"date="+picDate
-            fetch(fetchURL)
-                .then((payload) =>  payload.json() )
-                .then((json) => appendNASAData(json))
+        const fetchCatImageData = () => {
+            fetch(catAPIURL)
+                .then(response => response.json())
+                .then(json => appendCatImageData(json));
         }
 
-        const appendNASAData = (data) => {
-            console.log(data)
+        const appendCatImageData = (data) => {
+            console.log(data);
 
-            const picTitle = data.title
-            const imgURL = data.url
+            const catImgURL = data[0].url;
 
-            const picHeader = document.createElement('h3')
-            picHeader.innerText = picTitle
-            NASAsection.appendChild(picHeader)
+            const catImgHeader = document.createElement('h3');
+            catImgHeader.innerText = "Here's a cat image!";
+            catImageSection.appendChild(catImgHeader);
 
-            const nasaImg = document.createElement('img')
-            nasaImg.src = imgURL
-            nasaImg.alt = "the image of " + picTitle
-            NASAsection.appendChild(nasaImg)
+            const catImage = document.createElement('img');
+            catImage.src = catImgURL;
+            catImage.alt = "Cute cat image";
+            catImageSection.appendChild(catImage);
+
+            // Add click event for fetching a random meal when clicking the cat image
+            catImage.addEventListener("click", fetchRandomMeal);
         }
 
-        triggerButton.addEventListener("click", fetchCocktailData)
+        const listByLetter = () => {
+            fetch(cocktailsByLetterURL)
+                .then(response => response.json())
+                .then(data => displayCocktailsByLetter(data));
+        }
+
+        const displayCocktailsByLetter = (data) => {
+            const cocktails = data.drinks;
+            if (cocktails) {
+                cocktails.forEach(cocktail => {
+                    const name = cocktail.strDrink;
+                    const imgURL = cocktail.strDrinkThumb;
+
+                    const header = document.createElement('h3');
+                    header.innerText = name;
+                    cocktailSection.appendChild(header);
+
+                    const image = document.createElement('img');
+                    image.src = imgURL;
+                    image.alt = name + " image";
+                    cocktailSection.appendChild(image);
+                });
+            }
+        }
+
+        const fetchSeafoodData = () => {
+            fetch(seafoodURL)
+                .then(response => response.json())
+                .then(data => displaySeafood(data));
+        }
+
+        const displaySeafood = (data) => {
+            const seafoodMeals = data.meals;
+            if (seafoodMeals) {
+                seafoodMeals.forEach(seafoodMeal => {
+                    const name = seafoodMeal.strMeal;
+                    const imgURL = seafoodMeal.strMealThumb;
+
+                    const header = document.createElement('h3');
+                    header.innerText = name;
+                    cocktailSection.appendChild(header);
+
+                    const image = document.createElement('img');
+                    image.src = imgURL;
+                    image.alt = name + " image";
+                    cocktailSection.appendChild(image);
+                });
+            }
+        }
+
+        const fetchRandomMeal = () => {
+            fetch(randomMealURL)
+                .then(response => response.json())
+                .then(data => displayRandomMeal(data));
+        }
+
+        const displayRandomMeal = (data) => {
+            const meal = data.meals[0];
+            if (meal) {
+                const name = meal.strMeal;
+                const imgURL = meal.strMealThumb;
+
+                const header = document.createElement('h3');
+                header.innerText = name;
+                cocktailSection.appendChild(header);
+
+                const image = document.createElement('img');
+                image.src = imgURL;
+                image.alt = name + " image";
+                cocktailSection.appendChild(image);
+            }
+        }
+
+        triggerButton.addEventListener("click", fetchCocktailData);
+        listByLetterButton.addEventListener("click", listByLetter);
+        seafoodButton.addEventListener("click", fetchSeafoodData);
     </script>
 </body>
 </html>

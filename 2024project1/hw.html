@@ -7,63 +7,71 @@
     <title>The WWW as a Rube Goldberg machine</title>
     <style>
         #initTrigger, #searchButton, #randomMealButton {
-            font-size: 30px; /* Set the font size to make the buttons bigger */
+            font-size: 30px;
             font-weight: bold;
-            padding: 10px 20px; /* Set padding for a larger clickable area */
-            border: none; /* Remove default button border */
-            border-radius: 10px; /* Add some border radius for a rounded look */
-            cursor: pointer; /* Add a pointer cursor for better user experience */
-            margin-right: 10px; /* Add some margin between buttons */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 10px;
         }
 
         #searchButton {
             font-size: 30px;
-            padding: 10px 20px; /* Set padding for a larger clickable area for the "Search" button */
-            background-color: #fff; /* Change background color to white for the "Search" button */
-            color: #3498db; /* Set text color to blue for the "Search" button */
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #3498db;
         }
 
         #initTrigger, #randomMealButton {
-            background-color: #4195cd; /* Set a background color for the "Eat What Today?" and "Random Meal's Ingredients" buttons */
-            color: #fff; /* Set text color to white */
+            background-color: #4195cd;
+            color: #fff;
         }
 
         h3 {
-            color: #fff; /* Set text color to white for h3 elements */
-            font-weight: bold; /* Set font weight to bold for h3 elements */
-            font-family: 'Arial', sans-serif; /* Set font family to sans-serif */
+            color: #fff;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
         }
 
         ul {
-            list-style-type: none; /* Remove list bullet points */
-            padding: 0; /* Remove default padding for the list */
+            list-style-type: none;
+            padding: 0;
         }
 
         ul li {
-            font-weight: bold; /* Set font weight to bold for list items */
-            color: #fff; /* Set text color to white for list items */
-            font-family: 'Arial', sans-serif; /* Set font family to sans-serif */
+            font-weight: bold;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        img {
+            cursor: pointer;
+            max-width: 100%;
         }
     </style>
-
 </head>
 <body>
     <input type="text" id="searchInput" placeholder="Search by name">
     <button role="button" id="searchButton">Search</button>
-    
     <button role="button" id="initTrigger">Eat What Today?</button>
     <button role="button" id="randomMealButton">Make Something?</button>
+    
     <section id="mealSection"></section>
+    <section id="cocktailSection"></section>
 
     <script>
-        const triggerButton = document.getElementById('initTrigger');
         const searchButton = document.getElementById('searchButton');
+        const triggerButton = document.getElementById('initTrigger');
         const randomMealButton = document.getElementById('randomMealButton');
         const searchInput = document.getElementById('searchInput');
         const mealSection = document.getElementById('mealSection');
+        const cocktailSection = document.getElementById('cocktailSection');
+        let firstMeal; // Declare firstMeal at a higher scope
 
         const randomMealURL = "https://www.themealdb.com/api/json/v1/1/random.php";
         const searchMealURL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+        const cocktailURL = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
 
         const fetchMealData = (url, displayIngredients) => {
             fetch(url)
@@ -75,7 +83,7 @@
         const appendMealData = (data, displayIngredients) => {
             console.log(data);
 
-            const firstMeal = data.meals ? data.meals[0] : data.meal; // Handle different API response structures
+            firstMeal = data.meals ? data.meals[0] : data.meal;
             if (!firstMeal) {
                 console.error("No meal data found.");
                 return;
@@ -85,7 +93,7 @@
 
             const nameHeader = document.createElement('h3');
             nameHeader.innerText = "Have some " + mealName;
-            mealSection.innerHTML = ''; // Clear previous content
+            mealSection.innerHTML = '';
             mealSection.appendChild(nameHeader);
 
             const image = document.createElement('img');
@@ -97,7 +105,18 @@
                 const ingredientsList = document.createElement('ul');
                 ingredientsList.innerHTML = getIngredients(firstMeal);
                 mealSection.appendChild(ingredientsList);
+            } else {
+                image.addEventListener('click', () => {
+                    toggleIngredients();
+                    fetchCocktailData(); // Fetch random cocktail on food image click
+                });
             }
+        }
+
+        const toggleIngredients = () => {
+            const ingredientsList = document.createElement('ul');
+            ingredientsList.innerHTML = getIngredients(firstMeal);
+            mealSection.appendChild(ingredientsList);
         }
 
         const getIngredients = (meal) => {
@@ -112,9 +131,58 @@
             return ingredients;
         }
 
-        triggerButton.addEventListener("click", () => fetchMealData(randomMealURL, false));
+        const fetchCocktailData = () => {
+            fetch(cocktailURL)
+                .then((response) => response.json())
+                .then((payload) => appendCocktailData(payload))
+                .catch((error) => console.error("Error fetching cocktail data:", error));
+        }
+
+        const appendCocktailData = (data) => {
+            console.log(data);
+
+            const firstCocktail = data.drinks ? data.drinks[0] : null;
+            if (!firstCocktail) {
+                console.error("No cocktail data found.");
+                return;
+            }
+
+            const cocktailName = firstCocktail.strDrink;
+
+            const nameHeader = document.createElement('h3');
+            nameHeader.innerText = "Have some " + cocktailName;
+            cocktailSection.innerHTML = '';
+            cocktailSection.appendChild(nameHeader);
+
+            const image = document.createElement('img');
+            image.src = firstCocktail.strDrinkThumb;
+            image.alt = "image of " + cocktailName;
+            cocktailSection.appendChild(image);
+
+            const ingredientsList = document.createElement('ul');
+            ingredientsList.innerHTML = getCocktailIngredients(firstCocktail);
+            cocktailSection.appendChild(ingredientsList);
+        }
+
+        const getCocktailIngredients = (cocktail) => {
+            let ingredients = '';
+            for (let i = 1; i <= 15; i++) {
+                const ingredient = cocktail['strIngredient' + i];
+                const measure = cocktail['strMeasure' + i];
+                if (ingredient && measure) {
+                    ingredients += `<li>${measure} ${ingredient}</li>`;
+                }
+            }
+            return ingredients;
+        }
+
+        triggerButton.addEventListener("click", () => {
+            fetchMealData(randomMealURL, false);
+            fetchCocktailData();
+        });
+
         randomMealButton.addEventListener("click", () => fetchMealData(randomMealURL, true));
-        
+
         searchButton.addEventListener("click", () => {
             const searchTerm = searchInput.value.trim();
             if (searchTerm !== "") {
@@ -126,4 +194,3 @@
     </script>
 </body>
 </html>
-

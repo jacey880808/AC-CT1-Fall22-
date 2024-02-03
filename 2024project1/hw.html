@@ -67,7 +67,7 @@
         const searchInput = document.getElementById('searchInput');
         const mealSection = document.getElementById('mealSection');
         const cocktailSection = document.getElementById('cocktailSection');
-        let firstMeal; // Declare firstMeal at a higher scope
+        let firstMeal;
 
         const randomMealURL = "https://www.themealdb.com/api/json/v1/1/random.php";
         const searchMealURL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
@@ -108,7 +108,7 @@
             } else {
                 image.addEventListener('click', () => {
                     toggleIngredients();
-                    fetchCocktailData(); // Fetch random cocktail on food image click
+                    fetchCocktailData();
                 });
             }
         }
@@ -181,7 +181,10 @@
             fetchCocktailData();
         });
 
-        randomMealButton.addEventListener("click", () => fetchMealData(randomMealURL, true));
+        randomMealButton.addEventListener("click", () => {
+            fetchMealData(randomMealURL, true);
+            cocktailSection.innerHTML = ''; // Clear cocktail section
+        });
 
         searchButton.addEventListener("click", () => {
             const searchTerm = searchInput.value.trim();
